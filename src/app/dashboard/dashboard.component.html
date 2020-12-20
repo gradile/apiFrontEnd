@@ -1,0 +1,97 @@
+<div class="container">
+    <div>
+        <form #f="ngForm">
+            <div class="form-group">
+                <label for="case_number_id">Case Id</label>
+                <input type="text" name="case_number_id" [(ngModel)]="selectedMatter.case_number_id">
+            </div>
+            <div class="form-group">
+                <label for="case_file_number">File Number</label>
+                <input type="text" name="case_file_number" [(ngModel)]="selectedMatter.case_file_number">
+            </div>
+            <div class="form-group">
+                <label for="case_first_name">First Name</label>
+                <input type="text" name="case_first_name" [(ngModel)]="selectedMatter.case_first_name">
+            </div>
+            <div class="form-group">
+                <label for="case_last_name">Last Name</label>
+                <input type="text" name="case_last_name" [(ngModel)]="selectedMatter.case_last_name">
+            </div>
+            <div class="form-group">
+                <label for="case_subcategory">Subcategory</label>
+                <input type="text" name="case_subcategory" [(ngModel)]="selectedMatter.case_subcategory">
+            </div>
+            <div class="form-group">
+                <label for="case_creation_date">Creation Date</label>
+                <input type="text" name="case_creation_date" [(ngModel)]="selectedMatter.case_creation_date">
+            </div>
+            <div class="form-group">
+                <label for="case_closed_date">Closed Date</label>
+                <input type="text" name="case_closed_date" [(ngModel)]="selectedMatter.case_closed_date">
+            </div>
+            <div class="form-group">
+                <label for="case_box">Case Box</label>
+                <input type="text" name="case_box" [(ngModel)]="selectedMatter.case_box">
+            </div>
+            <div class="form-group">
+                <label for="case_author">Author</label>
+                <input type="text" name="case_author" [(ngModel)]="selectedMatter.case_author">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <input class="btn btn-primary" type="button" (click)="createOrUpdateMatter(f)"
+                        value="Create or Update Policy">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        <div>
+            <div class="card" *ngFor="let matter of matters">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            {{matter.case_number_id}}
+                        </div>
+                        <div class="col-md-2">
+                            {{matter.case_file_number}}
+                        </div>
+                        <div class="col-md-4">
+                            {{matter.case_first_name}}&nbsp;
+                            {{matter.case_last_name}}
+                        </div>
+                        <div class="col-md-2">
+                            {{matter.case_subcategory}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            {{matter.case_creation_date}}
+                        </div>
+                        <div class="col-md-2">
+                            {{matter.case_closed_date}}
+                        </div>
+                        <div class="col-md-2">
+                            {{matter.case_box}}
+                        </div>
+                        <div class="col-md-2">
+                            {{matter.case_author}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button class="btn btn-primary"
+                                (click)="deleteMatter(matter.case_number_id)">Delete</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-primary" (click)="selectMatter(matter)">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
