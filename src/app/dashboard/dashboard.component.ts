@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../services/api.service';
-import { Matter } from '../models/matter';
+import { Component, OnInit } from "@angular/core";
+import { ApiService } from "../services/api.service";
+import { Matter } from "../models/matter";
+import { Category } from "../models/category";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
-
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   matters: Matter[];
   selectedMatter: Matter = {
@@ -22,26 +22,29 @@ export class DashboardComponent implements OnInit {
     case_closed_date: null,
     case_box: null,
     case_author: null
-  }
+  };
+
+  categories: Category[] = [];
 
   ngOnInit() {
     this.apiService.readMatters().subscribe((matters: Matter[]) => {
       this.matters = matters;
-      console.log(this.matters);
-    })
+      console.log("Cases", this.matters);
+    });
+
+    this.apiService.getCategories().subscribe();
   }
   createOrUpdateMatter(form) {
     if (this.selectedMatter && this.selectedMatter.case_number_id) {
       form.value.id = this.selectedMatter.case_number_id;
-      console.log('form id', form.value.id);
+      console.log("form id", form.value.id);
       this.apiService.updateMatter(form.value).subscribe((matter: Matter) => {
         console.log("Matter updated ", matter);
       });
     } else {
-      console.log('form value', form.value);
+      console.log("form value", form.value);
       this.apiService.createMatter(form.value).subscribe((matter: Matter) => {
         console.log("Matter created ", matter);
-
       });
     }
   }
@@ -56,5 +59,4 @@ export class DashboardComponent implements OnInit {
       console.log("Matter deleted ", matter);
     });
   }
-
 }
