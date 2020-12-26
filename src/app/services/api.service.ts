@@ -10,10 +10,14 @@ import { Category } from "../models/category";
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  private REST_API_SERVER = "http://gradilec.ipower.com/api2020/";
+  private REST_API_SERVER = "http://ang.gradile.com/api2020/";
 
   readMatters(): Observable<Matter[]> {
     return this.httpClient.get<Matter[]>(`${this.REST_API_SERVER}read.php`);
+  }
+
+  read(id): Observable<any> {
+    return this.httpClient.get(`${this.REST_API_SERVER}read_one.php/${id}`);
   }
 
   createMatter(matter: Matter): Observable<Matter> {
@@ -23,14 +27,14 @@ export class ApiService {
     );
   }
 
-  updateMatter(matter: Matter) {
+  updateMatter(id, matter): Observable<any> {
     return this.httpClient.put<Matter>(
-      `${this.REST_API_SERVER}update.php`,
+      `${this.REST_API_SERVER}update.php/?case_number_id=${id}`,
       matter
     );
   }
 
-  deleteMatter(id: number) {
+  deleteMatter(id: number): Observable<any> {
     return this.httpClient.delete<Matter>(
       `${this.REST_API_SERVER}delete.php/?case_number_id=${id}`
     );
@@ -46,5 +50,9 @@ export class ApiService {
     return this.httpClient.get(
       `${this.REST_API_SERVER}read_last_file_number.php`
     );
+  }
+
+  searchByName(name): Observable<any> {
+    return this.httpClient.get(`${this.REST_API_SERVER}name.php?name=${name}`);
   }
 }

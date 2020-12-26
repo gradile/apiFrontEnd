@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="submit-form">
+        <div *ngIf="!submitted">
+        
+            <div class="form-group">
+                <label for="case_number_id">Case Id</label>
+                <input type="text" name="case_number_id" [(ngModel)]="matter.case_number_id">
+            </div>
+            <div class="form-group">
+                <label for="case_file_number">File Number</label>
+                <input type="text" name="case_file_number" value="{{newCaseNumber}}">
+            </div>
+            <div class="form-group">
+                <label for="case_first_name">First Name</label>
+                <input type="text" name="case_first_name" [(ngModel)]="matter.case_first_name">
+            </div>
+            <div class="form-group">
+                <label for="case_last_name">Last Name</label>
+                <input type="text" name="case_last_name" [(ngModel)]="matter.case_last_name">
+            </div>
+            <div class="form-group">
+                <label for="case_subcategory">Category</label>
+                <select name="category" id="case_category">
+                    <option *ngFor="let category of categories" value="{{category.category_id}}">{{category.category_description}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="case_subcategory">Subcategory</label>
+                <input type="text" name="case_subcategory" [(ngModel)]="matter.case_subcategory">
+            </div>
+            <div class="form-group">
+                <label for="case_creation_date">Creation Date</label>
+                <input type="text" name="case_creation_date" [(ngModel)]="matter.case_creation_date">
+            </div>
+            <div class="form-group">
+                <label for="case_closed_date">Closed Date</label>
+                <input type="text" name="case_closed_date" [(ngModel)]="matter.case_closed_date">
+            </div>
+            <div class="form-group">
+                <label for="case_box">Case Box</label>
+                <input type="text" name="case_box" [(ngModel)]="matter.case_box">
+            </div>
+            <div class="form-group">
+                <label for="case_author">Author</label>
+                <input type="text" name="case_author" [(ngModel)]="matter.case_author">
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <input class="btn btn-primary" type="button" (click)="createMatter()"
+                        value="Create Matter">
+                </div>
+            </div>
+            <div *ngIf="submitted">
+                <hs>You successfully created a matter!</hs>
+                <button class="btn btn-success" (click)="newMatter()">New...</button>
+            </div>
+      
+    </div>

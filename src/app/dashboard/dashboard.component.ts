@@ -38,10 +38,10 @@ export class DashboardComponent implements OnInit {
   newCaseNumber: string;
 
   ngOnInit() {
-    this.apiService.readMatters().subscribe((matters: Matter[]) => {
-      this.matters = matters;
-      console.log("Cases", this.matters);
-    });
+    // this.apiService.readMatters().subscribe((matters: Matter[]) => {
+    //   this.matters = matters;
+    //   console.log("Cases", this.matters);
+    // });
 
     this.apiService.getCategories().subscribe((categories: Category[]) => {
       this.categories = categories;
@@ -50,22 +50,22 @@ export class DashboardComponent implements OnInit {
   }
 
   createOrUpdateMatter(form) {
-    if (this.selectedMatter && this.selectedMatter.case_number_id) {
-      form.value.id = this.selectedMatter.case_number_id;
-      console.log("form id", form.value.id);
-      this.apiService.updateMatter(form.value).subscribe((matter: Matter) => {
-        console.log("Matter updated ", matter);
-      });
-    } else {
-      console.log("form value", form.value);
-      this.apiService.createMatter(form.value).subscribe((matter: Matter) => {
-        console.log("Matter created ", matter);
-      });
-    }
+    // if (this.selectedMatter && this.selectedMatter.case_number_id) {
+    //   form.value.id = this.selectedMatter.case_number_id;
+    //   console.log("form id", form.value.id);
+    //   this.apiService.updateMatter(form.value).subscribe((matter: Matter) => {
+    //     console.log("Matter updated ", matter);
+    //   });
+    // } else {
+    //   console.log("form value", form.value);
+    //   this.apiService.createMatter(form.value).subscribe((matter: Matter) => {
+    //     console.log("Matter created ", matter);
+    //   });
+    // }
   }
 
   selectMatter(matter: Matter) {
-    this.selectedMatter = matter;
+    // this.selectedMatter = matter;
   }
 
   deleteMatter(id) {

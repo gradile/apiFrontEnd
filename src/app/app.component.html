@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<div>
+    <nav class="navbar navbar-expand navbar-dark bg-dark"> 
+        <a href="#" class="navbar-brand">Gradile</a> 
+    <div class="navbar-nav mr-auto"> 
+        <li class="nav-item"> 
+            <a routerLink="list" class="nav-link">Matters</a> 
+        </li>
+        <li class="nav-item"> 
+            <a routerLink="create" class="nav-link">Create matter</a> 
+        </li> 
+    </div> 
+    </nav> 
+    <div class="container mt-5"> 
+        <router-outlet></router-outlet> 
+    </div> 
+</div>

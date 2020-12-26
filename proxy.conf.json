@@ -1,0 +1,10 @@
+{
+    "http://ang.gradile.com": {
+      "target": "http://ang.gradile.com/api2020",
+      "secure": false,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api2020": ""
+      }
+    }
+  }
