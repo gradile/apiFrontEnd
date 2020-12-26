@@ -41,4 +41,10 @@ export class ApiService {
       `${this.REST_API_SERVER}categories.php`
     );
   }
+
+  getLastCaseNumber(): Observable<any> {
+    return this.httpClient.get(
+      `${this.REST_API_SERVER}read_last_file_number.php`
+    );
+  }
 }

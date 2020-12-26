@@ -24,7 +24,18 @@ export class DashboardComponent implements OnInit {
     case_author: null
   };
 
-  categories: Category[] = [];
+  categories: Category[];
+  lastCaseNumber: any;
+  shortYear: string;
+  shortMonth: number;
+  fileOrder: string;
+  newFileOrder: number;
+  finalFileOrder: string;
+  newFirstFour: string;
+  storedFirstFour: string;
+  firstFourComparison: number;
+  actualMonth: string;
+  newCaseNumber: string;
 
   ngOnInit() {
     this.apiService.readMatters().subscribe((matters: Matter[]) => {
@@ -32,8 +43,12 @@ export class DashboardComponent implements OnInit {
       console.log("Cases", this.matters);
     });
 
-    this.apiService.getCategories().subscribe();
+    this.apiService.getCategories().subscribe((categories: Category[]) => {
+      this.categories = categories;
+      console.log("categories", this.categories);
+    });
   }
+
   createOrUpdateMatter(form) {
     if (this.selectedMatter && this.selectedMatter.case_number_id) {
       form.value.id = this.selectedMatter.case_number_id;
@@ -58,5 +73,13 @@ export class DashboardComponent implements OnInit {
       console.log("id ", id);
       console.log("Matter deleted ", matter);
     });
+  }
+
+  getNextCaseNumber() {
+    // let month = this.lastCaseNumber;
+    // this.fileOrder = this.lastCaseNumber.substr(5, 3);
+    // console.log("month", this.month);
+    // console.log("file order", this.fileOrder);
+    // return month;
   }
 }

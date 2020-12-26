@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AutoNumberComponent } from './auto-number/auto-number.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    AutoNumberComponent
   ],
   imports: [
     BrowserModule,
