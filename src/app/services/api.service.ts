@@ -10,7 +10,7 @@ import { Category } from "../models/category";
 export class ApiService {
   constructor(private httpClient: HttpClient) {}
 
-  private REST_API_SERVER = "http://ang.gradile.com/api2020/";
+  private REST_API_SERVER = "http://dilelle.us/api2020/";
 
   readMatters(): Observable<Matter[]> {
     return this.httpClient.get<Matter[]>(`${this.REST_API_SERVER}read.php`);

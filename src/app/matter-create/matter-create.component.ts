@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { Category } from "../models/category";
-import { FileNumber } from "../models/file-number";
 import { ApiService } from "../services/api.service";
 import { DataService } from "../services/data.service";
 

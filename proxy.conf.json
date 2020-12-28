@@ -1,6 +1,6 @@
 {
     "http://localhost:4200/*": {
-      "target": "http://ang.gradile.com/api2020",
+      "target": "http://dilelle.us/api2020",
       "secure": false,
       "changeOrigin": true
       }
