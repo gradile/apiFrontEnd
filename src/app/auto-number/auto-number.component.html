@@ -1,4 +1,18 @@
+<form #caseNumber="ngForm" (ngSubmit)="getNextCaseNumber()">
 <div class="form-group">
     <label for="case_file_number">File Number</label>
-    <input type="text" name="case_file_number" value="{{newCaseNumber}}">
+    <input type="text" name="fileNumber" id="fileNumber" [(ngModel)]="newFileNumber.fileNumber" value="{{newCaseNumber}}" required>
 </div>
+
+<div class="form-group">
+    <label for="case_subcategory">Category</label>
+    <select name="category" id="category" required [(ngModel)]="newFileNumber.category">
+        <option disabled selected value="">Select a category</option>
+        <option *ngFor="let category of categories, index as i" value="{{category.category_id}}">{{category.category_description}}</option>
+    </select>
+</div>
+<div>
+    <button class="btn btn-primary" type="submit">Create case number</button>
+</div>
+</form>
+<!-- value="{{newCaseNumber}}" -->

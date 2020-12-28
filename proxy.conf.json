@@ -1,10 +1,8 @@
 {
-    "http://ang.gradile.com": {
+    "http://localhost:4200/*": {
       "target": "http://ang.gradile.com/api2020",
       "secure": false,
-      "changeOrigin": true,
-      "pathRewrite": {
-        "^/api2020": ""
+      "changeOrigin": true
       }
     }
-  }
+  

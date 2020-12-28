@@ -1,7 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { Category } from "../models/category";
-import { Matter } from "../models/matter";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from "@angular/forms";
 import { ApiService } from "../services/api.service";
+import { DataService } from "../services/data.service";
+import { FileNumber } from "../models/file-number";
 
 @Component({
   selector: "app-auto-number",
@@ -9,22 +16,22 @@ import { ApiService } from "../services/api.service";
   styleUrls: ["./auto-number.component.scss"]
 })
 export class AutoNumberComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
+  form: FormGroup;
 
-  matters: Matter[];
-  selectedMatter: Matter = {
-    case_number_id: null,
-    case_file_number: null,
-    case_first_name: null,
-    case_last_name: null,
-    case_subcategory: null,
-    case_creation_date: null,
-    case_closed_date: null,
-    case_box: null,
-    case_author: null
+  constructor(
+    private apiService: ApiService,
+    private dataService: DataService
+  ) {}
+
+  newFileNumber: FileNumber = {
+    fileNumber: "",
+    category: ""
   };
 
+  newCaseNumber: string = "";
+
   categories: Category[];
+  default: string = "Please select a category";
   lastCaseNumber: any;
   shortYear: string;
   shortMonth: number;
@@ -35,20 +42,23 @@ export class AutoNumberComponent implements OnInit {
   storedFirstFour: string;
   firstFourComparison: number;
   actualMonth: string;
-  newCaseNumber: string;
 
   ngOnInit() {
-    this.apiService.readMatters().subscribe((matters: Matter[]) => {
-      this.matters = matters;
-      console.log("Cases", this.matters);
-    });
-
     this.apiService.getCategories().subscribe((categories: Category[]) => {
       this.categories = categories;
-      console.log("categories", this.categories);
+      //  console.log("categories", this.categories);
     });
 
+    this.dataService.currentMessage.subscribe(
+      message => (this.newCaseNumber = message)
+    );
+
     this.createNewCaseNumber();
+    // this.dataService.changeData(this.newCaseNumber);
+    console.log("file number from child", this.newCaseNumber);
+    console.log("create", this.createNewCaseNumber());
+
+    this.newFileNumber.fileNumber = this.newCaseNumber;
   }
 
   createNewCaseNumber() {
@@ -62,7 +72,7 @@ export class AutoNumberComponent implements OnInit {
         .getFullYear()
         .toString()
         .substr(-2);
-      console.log("short year", this.shortYear);
+      // console.log("short year", this.shortYear);
 
       //get the actual month
       // let m = new Date("November 20, 69 00:20:18");
@@ -74,25 +84,25 @@ export class AutoNumberComponent implements OnInit {
       } else {
         this.actualMonth = this.shortMonth.toString();
       }
-      console.log("short month", this.shortMonth);
-      console.log("actual month", this.actualMonth);
+      // console.log("short month", this.shortMonth);
+      // console.log("actual month", this.actualMonth);
 
       // get the new first 4 chars
       this.newFirstFour = this.shortYear + this.actualMonth;
-      console.log("new first four", this.newFirstFour);
+      // console.log("new first four", this.newFirstFour);
 
       // get the file order for the month
       this.fileOrder = this.lastCaseNumber.substr(5, 3);
-      console.log("file order", this.fileOrder);
+      // console.log("file order", this.fileOrder);
 
       //get the first 4 chars of the stored last case number
       this.storedFirstFour = this.lastCaseNumber.substr(0, 4);
-      console.log("storedFirstFour", this.storedFirstFour);
+      // console.log("storedFirstFour", this.storedFirstFour);
 
       this.firstFourComparison = this.storedFirstFour.localeCompare(
         this.newFirstFour
       );
-      console.log("comparison", this.firstFourComparison);
+      // console.log("comparison", this.firstFourComparison);
 
       if (this.firstFourComparison == 0) {
         this.newFileOrder = parseInt(this.fileOrder) + 1;
@@ -110,13 +120,27 @@ export class AutoNumberComponent implements OnInit {
       this.newCaseNumber = this.newFirstFour + "-" + this.finalFileOrder + "-";
       console.log("new case number", this.newCaseNumber);
     });
+
+    return this.newCaseNumber;
   }
 
-  getNextCaseNumber() {
-    // let month = this.lastCaseNumber;
-    // this.fileOrder = this.lastCaseNumber.substr(5, 3);
-    // console.log("month", this.month);
-    // console.log("file order", this.fileOrder);
-    // return month;
+  getNextCaseNumber(): void {
+    const data = {
+      // fileNumber: this.newFileNumber.fileNumber,
+      fileNumber: this.newCaseNumber,
+      category: this.newFileNumber.category
+    };
+    console.log("form data", data);
+    this.dataService.changeData(this.newCaseNumber.toString());
+    console.log(
+      "data service",
+      this.dataService.changeData(this.newCaseNumber.toString())
+    );
+    // this.dataService.changeData(this.newCaseNumber);
+    // console.log(
+    //   "data service",
+    //   this.dataService.changeData(this.newCaseNumber)
+    // );
+    // console.log("form", this.newFileNumber);
   }
 }

@@ -1,5 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { Category } from "../models/category";
+import { FileNumber } from "../models/file-number";
 import { ApiService } from "../services/api.service";
+import { DataService } from "../services/data.service";
 
 @Component({
   selector: "app-matter-create",
@@ -7,6 +10,7 @@ import { ApiService } from "../services/api.service";
   styleUrls: ["./matter-create.component.scss"]
 })
 export class MatterCreateComponent implements OnInit {
+  categories: Category[];
   matter = {
     case_number_id: null,
     case_file_number: null,
@@ -20,10 +24,18 @@ export class MatterCreateComponent implements OnInit {
   };
 
   submitted = false;
+  newFileNumberString: string;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private dataService: DataService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.dataService.currentMessage.subscribe(
+      message => (this.newFileNumberString = message)
+    );
+  }
 
   createMatter(): void {
     const data = {
@@ -40,7 +52,7 @@ export class MatterCreateComponent implements OnInit {
 
     this.apiService.createMatter(data).subscribe(
       response => {
-        console.log(response);
+        // console.log(response);
         this.submitted = true;
       },
       error => {

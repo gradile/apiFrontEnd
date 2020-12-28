@@ -1,15 +1,16 @@
 <div class="container">
     <div class="submit-form">
         <div *ngIf="!submitted">
-        
             <div class="form-group">
                 <label for="case_number_id">Case Id</label>
                 <input type="text" name="case_number_id" [(ngModel)]="matter.case_number_id">
             </div>
-            <div class="form-group">
+           <div class="form-group">
                 <label for="case_file_number">File Number</label>
-                <input type="text" name="case_file_number" value="{{newCaseNumber}}">
-            </div>
+                <input type="text" name="case_file_number"  [(ngModel)]="matter.case_file_number">
+            </div> 
+            <app-auto-number [newCaseNumber]></app-auto-number>
+            <!-- <app-auto-number [newCaseNumber]></app-auto-number> -->
             <div class="form-group">
                 <label for="case_first_name">First Name</label>
                 <input type="text" name="case_first_name" [(ngModel)]="matter.case_first_name">
@@ -17,12 +18,6 @@
             <div class="form-group">
                 <label for="case_last_name">Last Name</label>
                 <input type="text" name="case_last_name" [(ngModel)]="matter.case_last_name">
-            </div>
-            <div class="form-group">
-                <label for="case_subcategory">Category</label>
-                <select name="category" id="case_category">
-                    <option *ngFor="let category of categories" value="{{category.category_id}}">{{category.category_description}}</option>
-                </select>
             </div>
             <div class="form-group">
                 <label for="case_subcategory">Subcategory</label>
@@ -50,9 +45,10 @@
                         value="Create Matter">
                 </div>
             </div>
-            <div *ngIf="submitted">
-                <hs>You successfully created a matter!</hs>
-                <button class="btn btn-success" (click)="newMatter()">New...</button>
-            </div>
-      
+        </div>
+        <div *ngIf="submitted">
+            <hs>You successfully created a matter!</hs>
+            <button class="btn btn-success" (click)="newMatter()">New...</button>
+        </div>
     </div>
+</div>
