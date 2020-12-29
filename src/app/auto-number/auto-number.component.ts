@@ -77,7 +77,7 @@ export class AutoNumberComponent implements OnInit {
       // console.log("short year", this.shortYear);
 
       //get the actual month
-      // let m = new Date("November 20, 69 00:20:18");
+      //let m = new Date("January 20, 2021 00:20:18");
       let m = new Date();
       let month = m.getMonth();
       this.shortMonth = month + 1;
@@ -91,7 +91,7 @@ export class AutoNumberComponent implements OnInit {
 
       // get the new first 4 chars
       this.newFirstFour = this.shortYear + this.actualMonth;
-      // console.log("new first four", this.newFirstFour);
+      console.log("new first four", this.newFirstFour);
 
       // get the file order for the month
       this.fileOrder = this.lastCaseNumber.substr(5, 3);
@@ -99,18 +99,23 @@ export class AutoNumberComponent implements OnInit {
 
       //get the first 4 chars of the stored last case number
       this.storedFirstFour = this.lastCaseNumber.substr(0, 4);
-      // console.log("storedFirstFour", this.storedFirstFour);
+      console.log("storedFirstFour", this.storedFirstFour);
 
-      this.firstFourComparison = this.storedFirstFour.localeCompare(
-        this.newFirstFour
-      );
+      // this.firstFourComparison = this.storedFirstFour.localeCompare(
+      //   this.newFirstFour
+      // );
       // console.log("comparison", this.firstFourComparison);
 
-      if (this.firstFourComparison == 0) {
+      if (this.storedFirstFour === this.newFirstFour) {
         this.newFileOrder = parseInt(this.fileOrder) + 1;
       } else {
         this.newFileOrder = 1;
       }
+      // if (this.firstFourComparison == 0) {
+      //   this.newFileOrder = parseInt(this.fileOrder) + 1;
+      // } else {
+      //   this.newFileOrder = 1;
+      // }
 
       if (this.newFileOrder < 100) {
         this.finalFileOrder = this.newFileOrder.toString().padStart(3, "0");

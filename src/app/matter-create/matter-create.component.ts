@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Category } from "../models/category";
 import { ApiService } from "../services/api.service";
 import { DataService } from "../services/data.service";
@@ -11,47 +12,43 @@ import { DataService } from "../services/data.service";
 export class MatterCreateComponent implements OnInit {
   categories: Category[];
   newFileNumberString: string;
-  matter = {
-    case_number_id: null,
-    case_file_number: null,
-    case_first_name: null,
-    case_last_name: null,
-    case_subcategory: null,
-    case_creation_date: null,
-    case_closed_date: null,
-    case_box: null,
-    case_author: null
-  };
 
-  submitted = false;
   constructor(
     private apiService: ApiService,
-    private dataService: DataService
+    private dataService: DataService,
+    private fb: FormBuilder
   ) {}
+
+  isSubmitted = false;
+  matterForm: FormGroup;
+  fileNumber: string;
 
   ngOnInit(): void {
     this.dataService.currentMessage.subscribe(
-      message => (this.matter.case_file_number = message)
+      message => (this.fileNumber = message)
     );
-  }
 
+    this.matterForm = this.fb.group({
+      case_file_number: [{ value: this.fileNumber, disabled: true }],
+      case_first_name: ["", Validators.required],
+      case_last_name: ["", Validators.required],
+      case_subcategory: ["", Validators.required],
+      case_creation_date: [""],
+      case_closed_date: [""],
+      case_box: [""],
+      case_author: ["", Validators.required]
+    });
+  }
+  get formControls() {
+    return this.matterForm.controls;
+  }
   createMatter(): void {
-    const data = {
-      case_number_id: this.matter.case_number_id,
-      case_file_number: this.matter.case_file_number,
-      case_first_name: this.matter.case_first_name,
-      case_last_name: this.matter.case_last_name,
-      case_subcategory: this.matter.case_subcategory,
-      case_creation_date: this.matter.case_creation_date,
-      case_closed_date: this.matter.case_closed_date,
-      case_box: this.matter.case_box,
-      case_author: this.matter.case_author
-    };
+    const data = this.matterForm.getRawValue();
 
     this.apiService.createMatter(data).subscribe(
       response => {
         // console.log(response);
-        this.submitted = true;
+        this.isSubmitted = true;
       },
       error => {
         console.log(error);
@@ -59,18 +56,18 @@ export class MatterCreateComponent implements OnInit {
     );
   }
 
-  newMatter(): void {
-    this.submitted = false;
-    this.matter = {
-      case_number_id: null,
-      case_file_number: this.matter.case_file_number,
-      case_first_name: null,
-      case_last_name: null,
-      case_subcategory: null,
-      case_creation_date: null,
-      case_closed_date: null,
-      case_box: null,
-      case_author: null
-    };
-  }
+  // newMatter(): void {
+  //   this.isSubmitted = false;
+  //   this.matter = {
+  //     case_number_id: ['', Validators.],
+  //     case_file_number: this.matter.case_file_number,
+  //     case_first_name: ['', Validators.],
+  //     case_last_name: ['', Validators.],
+  //     case_subcategory: ['', Validators.],
+  //     case_creation_date: ['', Validators.],
+  //     case_closed_date: ['', Validators.],
+  //     case_box: ['', Validators.],
+  //     case_author: ['', Validators.]
+  //   };
+  // }
 }
