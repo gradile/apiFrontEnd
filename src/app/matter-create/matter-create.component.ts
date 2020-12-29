@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Category } from "../models/category";
 import { ApiService } from "../services/api.service";
 import { DataService } from "../services/data.service";
@@ -10,6 +10,7 @@ import { DataService } from "../services/data.service";
 })
 export class MatterCreateComponent implements OnInit {
   categories: Category[];
+  newFileNumberString: string;
   matter = {
     case_number_id: null,
     case_file_number: null,
@@ -23,8 +24,6 @@ export class MatterCreateComponent implements OnInit {
   };
 
   submitted = false;
-  newFileNumberString: string;
-
   constructor(
     private apiService: ApiService,
     private dataService: DataService
@@ -32,7 +31,7 @@ export class MatterCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.currentMessage.subscribe(
-      message => (this.newFileNumberString = message)
+      message => (this.matter.case_file_number = message)
     );
   }
 
@@ -64,7 +63,7 @@ export class MatterCreateComponent implements OnInit {
     this.submitted = false;
     this.matter = {
       case_number_id: null,
-      case_file_number: null,
+      case_file_number: this.matter.case_file_number,
       case_first_name: null,
       case_last_name: null,
       case_subcategory: null,

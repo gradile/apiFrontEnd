@@ -9,6 +9,7 @@ import {
 import { ApiService } from "../services/api.service";
 import { DataService } from "../services/data.service";
 import { FileNumber } from "../models/file-number";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-auto-number",
@@ -20,7 +21,8 @@ export class AutoNumberComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private dataService: DataService
+    private dataService: DataService,
+    private router: Router
   ) {}
 
   newFileNumber: FileNumber = {
@@ -29,7 +31,7 @@ export class AutoNumberComponent implements OnInit {
   };
 
   newCaseNumber: string = "";
-
+  completeNumber: string;
   categories: Category[];
   default: string = "Please select a category";
   lastCaseNumber: any;
@@ -126,21 +128,22 @@ export class AutoNumberComponent implements OnInit {
 
   getNextCaseNumber(): void {
     const data = {
-      // fileNumber: this.newFileNumber.fileNumber,
       fileNumber: this.newCaseNumber,
       category: this.newFileNumber.category
     };
     console.log("form data", data);
-    this.dataService.changeData(this.newCaseNumber.toString());
-    console.log(
-      "data service",
-      this.dataService.changeData(this.newCaseNumber.toString())
-    );
-    // this.dataService.changeData(this.newCaseNumber);
-    // console.log(
-    //   "data service",
-    //   this.dataService.changeData(this.newCaseNumber)
-    // );
-    // console.log("form", this.newFileNumber);
+
+    this.completeNumber = data.fileNumber + data.category;
+    console.log("complete number", this.completeNumber);
+
+    this.dataService.changeData(this.completeNumber.toString());
+
+    this.router.navigateByUrl("/create").then(e => {
+      if (e) {
+        console.log("navigation good");
+      } else {
+        console.log("navigation bad");
+      }
+    });
   }
 }
