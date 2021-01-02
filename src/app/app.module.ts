@@ -6,7 +6,7 @@ import { AppComponent } from "./app.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { from } from "rxjs";
-import { DashboardComponent } from "./dashboard/dashboard.component";
+
 import { AutoNumberComponent } from "./auto-number/auto-number.component";
 import { MatterListComponent } from "./matter-list/matter-list.component";
 import { MatterCreateComponent } from "./matter-create/matter-create.component";
@@ -15,7 +15,7 @@ import { MatterDetailsComponent } from "./matter-details/matter-details.componen
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
+
     AutoNumberComponent,
     MatterListComponent,
     MatterCreateComponent,

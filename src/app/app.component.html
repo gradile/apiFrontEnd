@@ -1,5 +1,5 @@
 <div>
-    <nav class="navbar navbar-expand navbar-dark bg-dark"> 
+    <!-- <nav class="navbar navbar-expand navbar-dark bg-dark"> 
         <a href="#" class="navbar-brand">Gradile</a> 
     <div class="navbar-nav mr-auto"> 
         <li class="nav-item"> 
@@ -15,8 +15,22 @@
             <a routerLink="details/" class="nav-link">Details</a> 
         </li>
     </div> 
-    </nav> 
-    <div class="container mt-5"> 
-        <router-outlet></router-outlet> 
-    </div> 
+    </nav>  -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a routerLink="list" class="nav-link">Matters</a> 
+        </li>
+        <li class="nav-item">
+            <a routerLink="create" class="nav-link">Create matter</a> 
+        </li>
+        <li class="nav-item">
+            <a routerLink="autonumber" class="nav-link">Auto number</a> 
+        </li>
+        <li class="nav-item">
+          
+          <a routerLink="details/" class="nav-link">Details</a> 
+        </li>
+      </ul>
 </div>
+
+<router-outlet></router-outlet> 

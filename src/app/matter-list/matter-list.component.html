@@ -1,51 +1,46 @@
-<div>
-
-    <div class="container">
-        <div>
-            <div class="card" *ngFor="let matter of matters; let i = index" (click)="setCurrentMatter(matter, i)">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-2">
-                            {{matter.case_number_id}}
-                        </div>
-                        <div class="col-md-2">
-                            {{matter.case_file_number}}
-                        </div>
-                        <div class="col-md-4">
-                            {{matter.case_first_name}}&nbsp;
-                            {{matter.case_last_name}}
-                        </div>
-                        <div class="col-md-2">
-                            {{matter.case_subcategory}}
-                        </div>
-                        <div class="col-md-2">
-                            {{matter.case_creation_date}}
-                        </div>
-                        <div class="col-md-2">
-                            {{matter.case_closed_date}}
-                        </div>
-                        <div class="col-md-2">
-                            {{matter.case_box}}
-                        </div>
-                        <div class="col-md-2">
-                            {{matter.case_author}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <button class="btn btn-primary"
-                                (click)="deleteMatter(matter.case_number_id)">Delete</button>
-                        </div>
-                    </div>
+<div class="container">
+    <div class="card" *ngFor="let matter of matters; let i = index" (click)="setCurrentMatter(matter, i)">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    {{matter.case_number_id}}
+                </div>
+                <div class="col-md-2">
+                    {{matter.case_file_number}}
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-primary" [router-link]="['/details/']">Update</a>
+                    {{matter.case_first_name}}&nbsp;
+                    {{matter.case_last_name}}
                 </div>
-                <div class="col-md-4">
-                    <button class="btn btn-primary" (click)="editButtonClick(matter.case_number_id)">Edit</button>
+                <div class="col-md-2">
+                    {{matter.case_subcategory}}
+                </div>
+                <div class="col-md-2">
+                    {{matter.case_creation_date}}
+                </div>
+                <div class="col-md-2">
+                    {{matter.case_closed_date}}
+                </div>
+                <div class="col-md-2">
+                    {{matter.case_box}}
+                </div>
+                <div class="col-md-2">
+                    {{matter.case_author}}
                 </div>
             </div>
-            
+            <div class="row">
+                <div class="col-md-4">
+                    <button class="btn btn-primary"
+                        (click)="deleteMatter(matter.case_number_id)">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-primary" [router-link]="['/details/']">Update</a>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary" (click)="editButtonClick(matter.case_number_id)">Edit</button>
         </div>
     </div>
 </div>
+
