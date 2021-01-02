@@ -7,12 +7,12 @@ import { MatterDetailsComponent } from "./matter-details/matter-details.componen
 import { MatterListComponent } from "./matter-list/matter-list.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "dashboard", pathMatch: "full" },
+  { path: "", redirectTo: "", pathMatch: "full" },
   { path: "dashboard", component: DashboardComponent },
   { path: "autonumber", component: AutoNumberComponent },
   { path: "create", component: MatterCreateComponent },
   { path: "list", component: MatterListComponent },
-  { path: "details", component: MatterDetailsComponent }
+  { path: "details/:id", component: MatterDetailsComponent }
 ];
 
 @NgModule({

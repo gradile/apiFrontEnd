@@ -2,7 +2,7 @@
 
     <div class="container">
         <div>
-            <div class="card" *ngFor="let matter of matters">
+            <div class="card" *ngFor="let matter of matters; let i = index" (click)="setCurrentMatter(matter, i)">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-2">
@@ -36,12 +36,16 @@
                             <button class="btn btn-primary"
                                 (click)="deleteMatter(matter.case_number_id)">Delete</button>
                         </div>
-                        <div class="col-md-4">
-                            <button class="btn btn-primary" (click)="selectMatter(matter)">Update</button>
-                        </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <a class="btn btn-primary" [router-link]="['/details/']">Update</a>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary" (click)="editButtonClick(matter.case_number_id)">Edit</button>
+                </div>
             </div>
+            
         </div>
     </div>
 </div>

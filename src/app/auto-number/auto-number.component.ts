@@ -30,20 +30,23 @@ export class AutoNumberComponent implements OnInit {
     category: ""
   };
 
-  newCaseNumber: string = "";
-  completeNumber: string;
   categories: Category[];
   default: string = "Please select a category";
-  lastCaseNumber: any;
-  shortYear: string;
-  shortMonth: number;
+
+  newCaseIdentifier: string = "";
+  completeIdentifier: string;
+  lastCaseIdentifier: any;
+  shortYearString: string;
+  thisMonthNumber: number;
+  thisMonthString: string;
+  currentMonthString: string;
   fileOrder: string;
   newFileOrder: number;
   finalFileOrder: string;
   newFirstFour: string;
-  storedFirstFour: string;
-  firstFourComparison: number;
-  actualMonth: string;
+  storedMonthString: string;
+  storedMonthNumber: number;
+  monthsComparison: number;
 
   ngOnInit() {
     this.apiService.getCategories().subscribe((categories: Category[]) => {
@@ -52,71 +55,68 @@ export class AutoNumberComponent implements OnInit {
     });
 
     this.dataService.currentMessage.subscribe(
-      message => (this.newCaseNumber = message)
+      message => (this.newCaseIdentifier = message)
     );
 
     this.createNewCaseNumber();
-    // this.dataService.changeData(this.newCaseNumber);
-    console.log("file number from child", this.newCaseNumber);
+    // this.dataService.changeData(this.newCaseIdentifier);
+    console.log("file number from child", this.newCaseIdentifier);
     console.log("create", this.createNewCaseNumber());
 
-    this.newFileNumber.fileNumber = this.newCaseNumber;
+    this.newFileNumber.fileNumber = this.newCaseIdentifier;
   }
 
   createNewCaseNumber() {
     this.apiService.getLastCaseNumber().subscribe(data => {
-      this.lastCaseNumber = data.case_file_number;
-      console.log("last case", this.lastCaseNumber);
+      this.lastCaseIdentifier = data.case_file_number;
+      console.log("last case", this.lastCaseIdentifier);
 
       //get the last 2 of the year
-      // this.shortYear = new Date("January 23, 2024")
-      this.shortYear = new Date()
+      //this.shortYearString = new Date("December 20, 2018")
+      this.shortYearString = new Date()
         .getFullYear()
         .toString()
         .substr(-2);
       // console.log("short year", this.shortYear);
 
       //get the actual month
-      //let m = new Date("January 20, 2021 00:20:18");
+      //let m = new Date("December 20, 2018 00:20:18");
       let m = new Date();
       let month = m.getMonth();
-      this.shortMonth = month + 1;
-      if (this.shortMonth < 10) {
-        this.actualMonth = this.shortMonth.toString().padStart(2, "0");
+      this.thisMonthNumber = month + 1;
+      if (this.thisMonthNumber < 10) {
+        this.currentMonthString = this.thisMonthNumber
+          .toString()
+          .padStart(2, "0");
       } else {
-        this.actualMonth = this.shortMonth.toString();
+        this.currentMonthString = this.thisMonthNumber.toString();
       }
-      // console.log("short month", this.shortMonth);
+      // console.log("short month", this.thisMonth.;
       // console.log("actual month", this.actualMonth);
 
       // get the new first 4 chars
-      this.newFirstFour = this.shortYear + this.actualMonth;
+      this.newFirstFour = this.shortYearString + this.currentMonthString;
       console.log("new first four", this.newFirstFour);
 
       // get the file order for the month
-      this.fileOrder = this.lastCaseNumber.substr(5, 3);
+
+      this.fileOrder = this.lastCaseIdentifier.substr(5, 3);
       // console.log("file order", this.fileOrder);
 
-      //get the first 4 chars of the stored last case number
-      this.storedFirstFour = this.lastCaseNumber.substr(0, 4);
-      console.log("storedFirstFour", this.storedFirstFour);
+      // get the last stored month and parse to number
+      this.storedMonthString = this.lastCaseIdentifier.substr(2, 2);
+      this.storedMonthNumber = parseInt(this.storedMonthString);
+      console.log("stored Month number", this.storedMonthNumber);
+      console.log("current Month number", this.thisMonthNumber);
 
-      // this.firstFourComparison = this.storedFirstFour.localeCompare(
-      //   this.newFirstFour
-      // );
-      // console.log("comparison", this.firstFourComparison);
-
-      if (this.storedFirstFour === this.newFirstFour) {
+      // compare the stored month with the current month. If month change, begin new series
+      if (this.storedMonthNumber === this.thisMonthNumber) {
         this.newFileOrder = parseInt(this.fileOrder) + 1;
       } else {
         this.newFileOrder = 1;
       }
-      // if (this.firstFourComparison == 0) {
-      //   this.newFileOrder = parseInt(this.fileOrder) + 1;
-      // } else {
-      //   this.newFileOrder = 1;
-      // }
 
+      // pad with zeros if the number has only one or two digits
       if (this.newFileOrder < 100) {
         this.finalFileOrder = this.newFileOrder.toString().padStart(3, "0");
       } else if (this.newFileOrder < 10) {
@@ -124,24 +124,25 @@ export class AutoNumberComponent implements OnInit {
       }
 
       console.log("final order", this.finalFileOrder);
-      this.newCaseNumber = this.newFirstFour + "-" + this.finalFileOrder + "-";
-      console.log("new case number", this.newCaseNumber);
+      this.newCaseIdentifier =
+        this.newFirstFour + "-" + this.finalFileOrder + "-";
+      console.log("new case number", this.newCaseIdentifier);
     });
 
-    return this.newCaseNumber;
+    return this.newCaseIdentifier;
   }
 
   getNextCaseNumber(): void {
     const data = {
-      fileNumber: this.newCaseNumber,
+      fileNumber: this.newCaseIdentifier,
       category: this.newFileNumber.category
     };
     console.log("form data", data);
 
-    this.completeNumber = data.fileNumber + data.category;
-    console.log("complete number", this.completeNumber);
+    this.completeIdentifier = data.fileNumber + data.category;
+    console.log("complete number", this.completeIdentifier);
 
-    this.dataService.changeData(this.completeNumber.toString());
+    this.dataService.changeData(this.completeIdentifier.toString());
 
     this.router.navigateByUrl("/create").then(e => {
       if (e) {

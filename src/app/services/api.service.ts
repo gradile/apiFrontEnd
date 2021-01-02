@@ -16,8 +16,10 @@ export class ApiService {
     return this.httpClient.get<Matter[]>(`${this.REST_API_SERVER}read.php`);
   }
 
-  read(id): Observable<any> {
-    return this.httpClient.get(`${this.REST_API_SERVER}read_one.php/${id}`);
+  read(id): Observable<Matter> {
+    return this.httpClient.get<Matter>(
+      `${this.REST_API_SERVER}read_one.php?case_number_id=${id}`
+    );
   }
 
   createMatter(matter: Matter): Observable<Matter> {
@@ -29,7 +31,7 @@ export class ApiService {
 
   updateMatter(id, matter): Observable<any> {
     return this.httpClient.put<Matter>(
-      `${this.REST_API_SERVER}update.php/?case_number_id=${id}`,
+      `${this.REST_API_SERVER}update.php?case_number_id=${id}`,
       matter
     );
   }

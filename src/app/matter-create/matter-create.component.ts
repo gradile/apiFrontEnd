@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Category } from "../models/category";
 import { ApiService } from "../services/api.service";
 import { DataService } from "../services/data.service";
@@ -14,6 +15,7 @@ export class MatterCreateComponent implements OnInit {
   newFileNumberString: string;
 
   constructor(
+    private router: Router,
     private apiService: ApiService,
     private dataService: DataService,
     private fb: FormBuilder
@@ -56,18 +58,13 @@ export class MatterCreateComponent implements OnInit {
     );
   }
 
-  // newMatter(): void {
-  //   this.isSubmitted = false;
-  //   this.matter = {
-  //     case_number_id: ['', Validators.],
-  //     case_file_number: this.matter.case_file_number,
-  //     case_first_name: ['', Validators.],
-  //     case_last_name: ['', Validators.],
-  //     case_subcategory: ['', Validators.],
-  //     case_creation_date: ['', Validators.],
-  //     case_closed_date: ['', Validators.],
-  //     case_box: ['', Validators.],
-  //     case_author: ['', Validators.]
-  //   };
-  // }
+  newMatter() {
+    this.router.navigateByUrl("/autonumber").then(e => {
+      if (e) {
+        console.log("navigation good");
+      } else {
+        console.log("navigation bad");
+      }
+    });
+  }
 }

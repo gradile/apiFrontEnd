@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { Matter } from "../models/matter";
 import { ApiService } from "../services/api.service";
 
@@ -12,8 +13,9 @@ export class MatterListComponent implements OnInit {
   currentMatter = null;
   currentIndex = -1;
   case_file_name = "";
+  id: any;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.readMatters();
@@ -30,6 +32,22 @@ export class MatterListComponent implements OnInit {
     );
   }
 
+  setCurrentMatter(matter, index): void {
+    this.currentMatter = matter;
+    this.currentIndex = index;
+    this.id = this.currentMatter.case_number_id;
+    console.log("matter from list", this.currentMatter);
+    console.log("id", this.id);
+
+    const pathToEdit = "/details/" + this.id;
+    console.log("/details/", pathToEdit);
+    //  this.router.navigateByUrl(pathToEdit);
+    // console.log(this.router.navigateByUrl("/details/", id));
+  }
+
+  editButtonClick(id: number) {
+    this.router.navigate(["/details", id]);
+  }
   refresh(): void {
     this.readMatters();
     this.currentMatter = null;

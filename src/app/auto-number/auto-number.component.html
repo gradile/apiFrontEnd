@@ -1,7 +1,7 @@
 <form #caseNumber="ngForm" (ngSubmit)="getNextCaseNumber()">
 <div class="form-group">
     <label for="case_file_number">File Number</label>
-    <input type="text" name="fileNumber" id="fileNumber" [(ngModel)]="newFileNumber.fileNumber" value="{{newCaseNumber}}" required>
+    <input type="text" name="fileNumber" id="fileNumber" [(ngModel)]="newFileNumber.fileNumber" value="{{newCaseIdentifier}}" required>
 </div>
 
 <div class="form-group">
