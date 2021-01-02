@@ -1,5 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, FormArray, FormControl } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  FormControl,
+  Validators
+} from "@angular/forms";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Matter } from "../models/matter";
 import { ApiService } from "../services/api.service";
@@ -27,18 +33,6 @@ export class MatterDetailsComponent implements OnInit {
   matters: any;
   editMode = false;
 
-  // matter: Matter = {
-  //   case_number_id: null,
-  //   case_file_number: "",
-  //   case_first_name: "",
-  //   case_last_name: "",
-  //   case_subcategory: "",
-  //   case_creation_date: null,
-  //   case_closed_date: null,
-  //   case_box: null,
-  //   case_author: ""
-  // };
-
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -47,22 +41,19 @@ export class MatterDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.route.params.subscribe((params: Params) => {
-    //   this.id = +params["id"];
-    //   this.editMode = params["id"] != null;
-    // });
-
     this.id = parseInt(this.route.snapshot.paramMap.get("id"));
     console.log("id from details", this.id);
 
-    this.editMatterForm = new FormGroup({
-      case_file_number: new FormControl(""),
-      case_first_name: new FormControl(""),
-      case_last_name: new FormControl(""),
-      case_subcategory: new FormControl(""),
-      case_closed_date: new FormControl(""),
-      case_box: new FormControl(""),
-      case_author: new FormControl("")
+    this.editMatterForm = this.fb.group({
+      case_number_id: [{ value: this.id, disabled: true }],
+      case_file_number: [""],
+      case_first_name: ["", Validators.required],
+      case_last_name: ["", Validators.required],
+      case_subcategory: ["", Validators.required],
+      case_creation_date: [""],
+      case_closed_date: [""],
+      case_box: [""],
+      case_author: ["", Validators.required]
     });
 
     this.apiService.read(this.id).subscribe(matter => {
@@ -70,6 +61,7 @@ export class MatterDetailsComponent implements OnInit {
       console.log("matter from service", matter);
       console.log("current matter", this.currentMatter);
       this.editMatterForm.patchValue({
+        case_number_id: this.currentMatter["case_number_id"],
         case_file_number: this.currentMatter["case_file_number"],
         case_first_name: this.currentMatter["case_first_name"],
         case_last_name: this.currentMatter["case_last_name"],
@@ -81,27 +73,22 @@ export class MatterDetailsComponent implements OnInit {
     });
   }
 
-  //   this.patchForm.patchValue({
-  //     age: this.fetchedProjFunc['age'],
-  //     name: this.fetchedProjFunc['name'],
-  //     numberLegs: this.fetchedProjFunc['numberLegs']
-  //    });
-  // });
-
-  // editMatterForm = new FormGroup({
-  //   case_file_number: new FormControl({
-  //     value: this.currentMatter.case_file_number
-  //   }),
-  //   case_first_name: new FormControl(this.currentMatter.case_first_name),
-  //   case_last_name: new FormControl(this.currentMatter.case_last_name),
-  //   case_subcategory: new FormControl(this.currentMatter.case_subcategory),
-  //   case_closed_date: new FormControl(this.currentMatter.case_closed_date),
-  //   case_box: new FormControl(this.currentMatter.case_box),
-  //   case_author: new FormControl(this.currentMatter.case_author)
-  // });
-  // }
-
   get formControls() {
     return this.editMatterForm.controls;
+  }
+
+  updateMatter() {
+    const data = this.editMatterForm.getRawValue();
+    console.log("form data", data);
+
+    this.apiService.updateMatter(this.id, data).subscribe(
+      response => {
+        console.log("response", response);
+        this.message = "The matter has been updated";
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

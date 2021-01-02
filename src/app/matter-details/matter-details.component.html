@@ -1,5 +1,9 @@
 
-<form [formGroup]="editMatterForm">
+<form [formGroup]="editMatterForm" (ngSubmit)="updateMatter()">
+    <div class="form-group">
+        <label for="case_number_id">File Number Id</label>
+        <input type="text" formControlName="case_number_id">
+    </div>
     <div class="form-group">
          <label for="case_file_number">File Number</label>
          <input type="text" formControlName="case_file_number">
@@ -30,7 +34,12 @@
      <div class="form-group">
          <label for="case_author">Author</label>
          <input type="text" formControlName="case_author" >
-       
      </div>
+     <div class="row">
+        <div class="col-md-4">
+            <input class="btn btn-primary" [disabled]="editMatterForm.invalid" type="submit" 
+                value="Update Matter">
+        </div>
+    </div>
 </form>
  

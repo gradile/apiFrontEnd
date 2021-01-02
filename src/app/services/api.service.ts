@@ -29,8 +29,8 @@ export class ApiService {
     );
   }
 
-  updateMatter(id, matter): Observable<any> {
-    return this.httpClient.put<Matter>(
+  updateMatter(id, matter: Matter): Observable<Matter> {
+    return this.httpClient.post<Matter>(
       `${this.REST_API_SERVER}update.php?case_number_id=${id}`,
       matter
     );
