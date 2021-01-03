@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Category } from "../models/category";
+import { Subcategory } from "../models/subcategory";
 import { ApiService } from "../services/api.service";
 import { DataService } from "../services/data.service";
 
@@ -13,6 +14,7 @@ import { DataService } from "../services/data.service";
 export class MatterCreateComponent implements OnInit {
   categories: Category[];
   newFileNumberString: string;
+  subcategories: Subcategory[];
 
   constructor(
     private router: Router,
@@ -24,11 +26,22 @@ export class MatterCreateComponent implements OnInit {
   isSubmitted = false;
   matterForm: FormGroup;
   fileNumber: string;
+  categoryId: string;
 
   ngOnInit(): void {
     this.dataService.currentMessage.subscribe(
       message => (this.fileNumber = message)
     );
+
+    this.categoryId = this.fileNumber.substr(9, 10);
+    console.log("category id", this.categoryId);
+
+    this.apiService
+      .getRelatedSubcategory(this.categoryId)
+      .subscribe((subcategory: Subcategory[]) => {
+        this.subcategories = subcategory;
+      });
+    console.log("subcategories", this.subcategories);
 
     this.matterForm = this.fb.group({
       case_file_number: [{ value: this.fileNumber, disabled: true }],
@@ -44,6 +57,16 @@ export class MatterCreateComponent implements OnInit {
   get formControls() {
     return this.matterForm.controls;
   }
+
+  // getRelatedSubcategories(categoryId) {
+  //   this.apiService
+  //     .getRelatedSubcategory(categoryId)
+  //     .subscribe((subcategory: Subcategory[]) => {
+  //       this.subcategories = subcategory;
+  //     });
+  //   console.log("subcategories", this.subcategories);
+  // }
+
   createMatter(): void {
     const data = this.matterForm.getRawValue();
 

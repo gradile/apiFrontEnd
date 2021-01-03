@@ -16,9 +16,11 @@
                 <p [ngClass]="{ 'has-error': isSubmitted && formControls.case_last_name.errors }"></p>
             </div>
             <div class="form-group" [ngClass]="{ 'has-error': isSubmitted && formControls.case_subcategory.errors }">
-                <label for="case_subcategory">Subcategory</label>
-                <input type="text" formControlName="case_subcategory">
-              
+                <label for="case_subcategory">Sub category</label>
+                <select formControlName="case_subcategory" id="case_subcategory" >
+                    <option disabled selected value="">Select a category</option>
+                    <option *ngFor="let item of subcategories, index as i" value="{{item.subcategory_name}}">{{item.subcategory_name}}</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="case_closed_date">Closed Date</label>

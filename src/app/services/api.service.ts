@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Matter } from "../models/matter";
 import { Observable } from "rxjs";
 import { Category } from "../models/category";
+import { Subcategory } from "../models/subcategory";
 
 @Injectable({
   providedIn: "root"
@@ -36,9 +37,9 @@ export class ApiService {
     );
   }
 
-  deleteMatter(id: number): Observable<any> {
+  deleteMatter(id): Observable<Matter> {
     return this.httpClient.delete<Matter>(
-      `${this.REST_API_SERVER}delete.php/?case_number_id=${id}`
+      `${this.REST_API_SERVER}delete.php?case_number_id=${id}`
     );
   }
 
@@ -51,6 +52,12 @@ export class ApiService {
   getLastCaseNumber(): Observable<any> {
     return this.httpClient.get(
       `${this.REST_API_SERVER}read_last_file_number.php`
+    );
+  }
+
+  getRelatedSubcategory(id): Observable<any> {
+    return this.httpClient.get(
+      `${this.REST_API_SERVER}relatedSubcategories.php?id=${id}`
     );
   }
 
