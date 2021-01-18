@@ -32,6 +32,7 @@ export class MatterDetailsComponent implements OnInit {
   id;
   matters: any;
   editMode = false;
+  isSubmitted = false;
 
   constructor(
     private apiService: ApiService,
@@ -85,10 +86,27 @@ export class MatterDetailsComponent implements OnInit {
       response => {
         console.log("response", response);
         this.message = "The matter has been updated";
+        this.isSubmitted = true;
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  deleteMatter() {}
+
+  newMatter() {
+    this.router.navigateByUrl("/autonumber").then(e => {
+      if (e) {
+        console.log("navigation good");
+      } else {
+        console.log("navigation bad");
+      }
+    });
+  }
+
+  editModeClick() {
+    this.editMode = true;
   }
 }

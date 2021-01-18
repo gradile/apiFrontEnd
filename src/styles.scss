@@ -24,11 +24,17 @@
   border-color: #0a61b8 #0a61b8 #0a61b8 !important;
   border-bottom: 4px solid #0a61b8 !important;
 }
-// .nav-tabs .nav-link:focus,
-// .nav-tabs .nav-link:hover {
-//   border-color: #000;
-//   border-bottom: none;
-//   border-top: 1px solid #000;
-//   border-right: 1px solid #000;
-//   border-left: 1px solid #000;
-// }
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgb(163, 162, 162) !important;
+  border-radius: 0.5rem;
+  margin-top: 20px;
+  box-shadow: 10px 10px 10px #cccc;
+}

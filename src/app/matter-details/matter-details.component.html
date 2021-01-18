@@ -1,46 +1,74 @@
-<div class="container">
-    <form [formGroup]="editMatterForm" (ngSubmit)="updateMatter()">
-        <div class="form-group">
-            <label for="case_number_id">File Number Id</label>
-            <input type="text" formControlName="case_number_id">
-        </div>
-        <div class="form-group">
-            <label for="case_file_number">File Number</label>
-            <input type="text" formControlName="case_file_number">
-        </div> 
-        <div class="form-group">
-            <label for="case_first_name">First Name</label>
-            <input type="text" formControlName="case_first_name">
+<div class="container" *ngIf="editMode">
+    <div class="submit-form" *ngIf="!isSubmitted">
+        <form [formGroup]="editMatterForm" (ngSubmit)="updateMatter()">
+            <div class="form-group">
+                <label for="case_number_id">File Number Id</label>
+                <input type="text" formControlName="case_number_id">
+            </div>
+            <div class="form-group">
+                <label for="case_file_number">File Number</label>
+                <input type="text" formControlName="case_file_number">
+            </div> 
+            <div class="form-group">
+                <label for="case_first_name">First Name</label>
+                <input type="text" formControlName="case_first_name">
+                
+            </div>
+            <div class="form-group">
+                <label for="case_last_name">Last Name</label>
+                <input type="text" formControlName="case_last_name" >
             
-        </div>
-        <div class="form-group">
-            <label for="case_last_name">Last Name</label>
-            <input type="text" formControlName="case_last_name" >
-        
-        </div>
-        <div class="form-group">
-            <label for="case_subcategory">Subcategory</label>
-            <input type="text" formControlName="case_subcategory">
-        
-        </div>
-        <div class="form-group">
-            <label for="case_closed_date">Closed Date</label>
-            <input type="text" formControlName="case_closed_date">
-        </div>
-        <div class="form-group">
-            <label for="case_box">Case Box</label>
-            <input type="text" formControlName="case_box">
-        </div>
-        <div class="form-group">
-            <label for="case_author">Author</label>
-            <input type="text" formControlName="case_author" >
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <input class="btn btn-primary" [disabled]="editMatterForm.invalid" type="submit" 
-                    value="Update Matter">
+            </div>
+            <div class="form-group">
+                <label for="case_subcategory">Subcategory</label>
+                <input type="text" formControlName="case_subcategory">
+            
+            </div>
+            <div class="form-group">
+                <label for="case_closed_date">Closed Date</label>
+                <input type="text" formControlName="case_closed_date">
+            </div>
+            <div class="form-group">
+                <label for="case_box">Case Box</label>
+                <input type="text" formControlName="case_box">
+            </div>
+            <div class="form-group">
+                <label for="case_author">Author</label>
+                <input type="text" formControlName="case_author" >
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <input class="btn btn-primary" [disabled]="editMatterForm.invalid" type="submit" 
+                        value="Update Matter">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="isSubmitted ">
+        <hs>You successfully updated a matter!</hs>
+        <button class="btn btn-success" (click)="newMatter()">New...</button>
+    </div>
+</div>
+<div class="container" *ngIf="!editMode">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5 class="card-title">Case number id</h5>
+                    <p class="card-text">{{currentMatter.case_number_id}}</p>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="card-title">Case file identifier</h5>
+                    <p class="card-text">{{currentMatter.case_file_number}}</p>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary" (click)="editModeClick()">Edit</button>
+            </div>
+            <div>
+                <button class="btn btn-primary" (click)="deleteMatter()">Delete</button>
             </div>
         </div>
-    </form>
+    </div>
 </div>
  

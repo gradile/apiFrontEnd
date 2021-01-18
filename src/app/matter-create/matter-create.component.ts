@@ -58,15 +58,6 @@ export class MatterCreateComponent implements OnInit {
     return this.matterForm.controls;
   }
 
-  // getRelatedSubcategories(categoryId) {
-  //   this.apiService
-  //     .getRelatedSubcategory(categoryId)
-  //     .subscribe((subcategory: Subcategory[]) => {
-  //       this.subcategories = subcategory;
-  //     });
-  //   console.log("subcategories", this.subcategories);
-  // }
-
   createMatter(): void {
     const data = this.matterForm.getRawValue();
 
